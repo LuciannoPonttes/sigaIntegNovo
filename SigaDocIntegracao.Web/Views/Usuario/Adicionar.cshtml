@@ -1,0 +1,83 @@
+﻿@using SigaDocIntegracao.Web.UsuarioContexto.ViewModel
+@model UsuarioViewModel
+
+@{
+    ViewData["Title"] = "Criar Usuário";
+}
+
+<!-- Toast container -->
+<div aria-live="polite" aria-atomic="true" class="position-relative" style="z-index: 1000;">
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="margin-top: 60px;">
+        <!-- Posição no topo, à direita -->
+        <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+            <div class="toast-header bg-warning">
+                <strong class="me-auto text-black">Aviso</strong> <!-- Título em amarelo de aviso -->
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                @TempData["ErrorMessage"]
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+
+    <form method="post">
+        <div class="form-group mb-3">
+            <label for="Nome" class="fw-bold">Nome:</label>
+            <input type="text" id="Nome" name="Nome" class="form-control" placeholder="Digite o nome" required />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="Email" class="fw-bold">Email:</label>
+            <input type="email" id="Email" name="Email" class="form-control" placeholder="Digite o email" required />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="Matricula" class="fw-bold">Matrícula:</label>
+            <input type="text" id="matricula" name="matricula" class="form-control" placeholder="Digite a matrícula" required />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="Tipo" class="fw-bold">Tipo de usuário:</label>
+            <select id="tipo" name="tipo" class="form-control" required>
+                <option value="">Selecione uma permissão</option>
+                <option value="Admin">Admin</option>
+                <option value="Comum">Comum</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="Permissoes" class="fw-bold">Permissões:</label>
+            <div>
+                @foreach (var permissao in Model.PermissoesDisponiveis)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="PermissoesSelecionadas" value="@permissao.Id" id="perm_@permissao.Id">
+                        <label class="form-check-label" for="perm_@permissao.Id">
+                            @permissao.Nome
+                        </label>
+                    </div>
+                }
+            </div>
+        </div>
+      
+        <button type="submit" class="btn btn-success">Criar</button>
+        <a class="btn btn-secondary" asp-area="" asp-controller="Usuario" asp-action="Index" style="margin-left: 10px;">Cancelar</a>
+    </form>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var errorMessage = '@TempData["ErrorMessage"]';
+        if (errorMessage) {
+            var toastEl = document.getElementById('errorToast');
+            var toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+    });
+</script>

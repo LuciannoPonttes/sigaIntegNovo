@@ -1,0 +1,93 @@
+{
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_HTTPS_PORTS": "8081",
+        "ASPNETCORE_HTTP_PORTS": "8080",
+        "URL_ENDPOINT_SIGADOC": "http://localhost:8080",
+        "CONNECTION_STRING_GESTOR_RH": "Server=10.0.17.111\\CORP2,65225;Database=IFRCORP;User Id=usr_sigadoc_cons;Password=q42jhz2kp3q2",
+        "CONNECTION_STRING_SIGADOC": "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.26.79)(PORT=1521))(CONNECT_DATA=(SID=ifrsiga)));User Id=corporativo;Password=qsxcasf12309",
+        "CONNECTION_STRING_SIGADOC_BASE_SIGA": "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.19.72)(PORT=1521))(CONNECT_DATA=(SID=homolog)));User Id=siga;Password=qsxcasf12309",
+        "INTERVALO_CARGA": "300",
+        "SMTP_ADDRESS": "relay.infraero.gov.br",
+        "PORT_NUMBER": "2525",
+        "EMAIL_FROM_ADDRESS": "naoresponda@infraero.gov.br",
+        "INTERVALO_EMAIL": "5",
+        "CONNECTION_STRING_SIGA_DOC_INTEG": "Host=10.0.18.63;Port=5432;Database=ifrsigadocintegracao;Username=usr_sigadocintegracao;Password=infraero;"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5057"
+    },
+    "https": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_HTTPS_PORTS": "8081",
+        "ASPNETCORE_HTTP_PORTS": "8080",
+        "URL_ENDPOINT_SIGADOC": "http://localhost:8080",
+        "CONNECTION_STRING_GESTOR_RH": "Server=10.0.17.111\\CORP2,65225;Database=IFRCORP;User Id=usr_sigadoc_cons;Password=q42jhz2kp3q2",
+        "CONNECTION_STRING_SIGADOC": "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.26.79)(PORT=1521))(CONNECT_DATA=(SID=ifrsiga)));User Id=USR_SIGADOCINTEGRACAO;Password=5zBwJAvQEiZp",
+        "CONNECTION_STRING_SIGADOC_BASE_SIGA": "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.26.79)(PORT=1521))(CONNECT_DATA=(SID=ifrsiga)));User Id=USR_SIGADOCINTEGRACAO;Password=5zBwJAvQEiZp",
+        "INTERVALO_CARGA": "300",
+        "SMTP_ADDRESS": "relay.infraero.gov.br",
+        "PORT_NUMBER": "2525",
+        "EMAIL_FROM_ADDRESS": "t031842941@infraero.gov.br",
+        "INTERVALO_EMAIL": "5",
+        "CONNECTION_STRING_SIGA_DOC_INTEG": "Host=10.0.18.63;Port=5432;Database=ifrsigadocintegracao;Username=usr_sigadocintegracao;Password=infraero;",
+        "URL_DOC_EMAIL_SIGADOC": "https://sigadoc-hml.infraero.gov.br/sigaex/app/expediente/doc/exibir?sigla="
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7038;http://localhost:5057"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_HTTPS_PORTS": "8081",
+        "ASPNETCORE_HTTP_PORTS": "8080",
+        "URL_ENDPOINT_SIGADOC": "http://localhost:8080",
+        "CONNECTION_STRING_GESTOR_RH": "Server=10.0.17.111\\CORP2,65225;Database=IFRCORP;User Id=usr_sigadoc_cons;Password=q42jhz2kp3q2",
+        "CONNECTION_STRING_SIGADOC": "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.26.79)(PORT=1521))(CONNECT_DATA=(SID=ifrsiga)));User Id=corporativo;Password=qsxcasf12309",
+        "CONNECTION_STRING_SIGADOC_BASE_SIGA": "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.19.72)(PORT=1521))(CONNECT_DATA=(SID=homolog)));User Id=siga;Password=qsxcasf12309",
+        "INTERVALO_CARGA": "300",
+        "SMTP_ADDRESS": "relay.infraero.gov.br",
+        "PORT_NUMBER": "2525",
+        "EMAIL_FROM_ADDRESS": "t031842941@infraero.gov.br",
+        "INTERVALO_EMAIL": "5",
+        "CONNECTION_STRING_SIGA_DOC_INTEG": "Host=10.0.18.63;Port=5432;Database=ifrsigadocintegracao;Username=usr_sigadocintegracao;Password=infraero;"
+      }
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "ASPNETCORE_HTTPS_PORTS": "8081",
+        "ASPNETCORE_HTTP_PORTS": "8080",
+        "URL_ENDPOINT_SIGADOC": "http://localhost:8080",
+        "CONNECTION_STRING_GESTOR_RH": "Server=10.0.17.111\\CORP2,65225;Database=IFRCORP;User Id=usr_sigadoc_cons;Password=q42jhz2kp3q2",
+        "CONNECTION_STRING_SIGADOC": "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.26.79)(PORT=1521))(CONNECT_DATA=(SID=ifrsiga)));User Id=corporativo;Password=qsxcasf12309",
+        "CONNECTION_STRING_SIGADOC_BASE_SIGA": "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.0.19.72)(PORT=1521))(CONNECT_DATA=(SID=homolog)));User Id=siga;Password=qsxcasf12309",
+        "INTERVALO_CARGA": "300",
+        "SMTP_ADDRESS": "relay.infraero.gov.br",
+        "PORT_NUMBER": "2525",
+        "EMAIL_FROM_ADDRESS": "t031842941@infraero.gov.br",
+        "INTERVALO_EMAIL": "5",
+        "CONNECTION_STRING_SIGA_DOC_INTEG": "Host=10.0.18.63;Port=5432;Database=ifrsigadocintegracao;Username=usr_sigadocintegracao;Password=infraero;"
+      },
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:63487",
+      "sslPort": 44366
+    }
+  }
+}

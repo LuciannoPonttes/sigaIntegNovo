@@ -1,0 +1,2 @@
+Add-Migration Add_Hist -Context Contexto
+Update-database -Context Contexto

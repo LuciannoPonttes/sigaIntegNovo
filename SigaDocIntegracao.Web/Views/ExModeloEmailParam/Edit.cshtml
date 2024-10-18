@@ -1,0 +1,48 @@
+﻿@model SigaDocIntegracao.Web.Models.ModuloEmail.ExModeloEmailParamModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar Item</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="DescricaoModelo" class="control-label"></label>
+                <input asp-for="DescricaoModelo" class="form-control" />
+                <span asp-validation-for="DescricaoModelo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Destinatarios" class="control-label"></label>
+                <input asp-for="Destinatarios" class="form-control" />
+                <span asp-validation-for="Destinatarios" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConteudoEmail" class="control-label"></label>
+                <input asp-for="ConteudoEmail" class="form-control" />
+                <span asp-validation-for="ConteudoEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Assunto" class="control-label"></label>
+                <input asp-for="Assunto" class="form-control" />
+                <span asp-validation-for="Assunto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Alterar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar para a Lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,72 @@
+﻿@using SigaDocIntegracao.Web.UsuarioContexto.ViewModel
+@model ListarUsuarioPaginadoViewModel
+
+@if (Model != null && Model.TotalCount > 0 && Model.Usuarios != null)
+{
+    <div>
+        <table class="table table-inbox table-hover table-responsive-md table-striped" style="border:2px medium black;">
+
+            <thead class="thead-light">
+                <tr class="unread">
+                    <th class="col-sm-2 view-message  dont-show">Nome</th>
+                    <th class="col-sm-2 view-message  dont-show">Email</th>
+                    <th class="col-sm-2 view-message  dont-show">Tipo</th>
+                    <th class="col-sm-2 view-message  dont-show">Status Cadastro</th>
+                    <th class="col-sm-2 view-message  dont-show">Data Cadastro</th>
+                    <th class="col-sm-2 view-message  dont-show">Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var usuario in Model.Usuarios)
+                {
+                    <tr>
+                        <td>@usuario.Nome</td>
+                        <td>@usuario.Email</td>
+                        <td>@usuario.Tipo</td>
+                        <td>@usuario.StatusCadastro</td>
+                        <td>@usuario.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                        <td>
+                            <span class="btn-group pull-right">
+                                <a class="btn btn-xs" asp-area="" asp-controller="Usuario" asp-action="Editar" asp-route-id="@usuario.Id" style="background-color: blue;">
+                                    <i class="bi-pencil" style="font-size: 15px; color: white;"></i>
+                                </a>
+                                &nbsp;&nbsp;
+                                <form method="post">
+                                    <button type="submit" class="btn btn-xs" asp-area="" asp-controller="Usuario" asp-action="Excluir" asp-route-id="@usuario.Id" style="font-size: 15px; background-color: red; color: white;" onclick="return confirm('Deseja excluir este usuário?');">
+                                        <i class="bi-trash"></i>
+                                    </button>
+                                </form>
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item @(Model.PageIndex == 0 ? "disabled" : "")">
+                        <a class="page-link" href="#" onclick="changePage(@(Model.PageIndex - 1))">Anterior</a>
+                    </li>
+                    @for (int i = 0; i < Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                            <a class="page-link" href="#" onclick="changePage(@i)">@(i + 1)</a>
+                        </li>
+                    }
+                    <li class="page-item @(Model.PageIndex >= Model.TotalPages - 1 ? "disabled" : "")">
+                        <a class="page-link" href="#" onclick="changePage(@(Model.PageIndex + 1))">Próximo</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-info" style="width: 30rem; margin: 3rem auto 0; text-align: center;">
+        <p>Nenhum usuário encontrado.</p>
+    </div>
+}

@@ -1,0 +1,105 @@
+﻿@model SigaDocIntegracao.Web.Models.ModuloEmail.ExModeloEmailParamModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <!-- Novo campo NomeNot -->
+            <div class="form-group">
+                <label asp-for="NomeNot" class="control-label"></label>
+                <input asp-for="NomeNot" class="form-control" />
+                <span asp-validation-for="NomeNot" class="text-danger"></span>
+            </div>
+
+            <!-- Campo oculto para DescricaoModelo -->
+            <label for="descricaoModelo">Modelo:</label><br />
+            <input type="text" asp-for="DescricaoModelo" id="descricaoModelo" value="@Model.DescricaoModelo" readonly
+                   style="background-color: #e9ecef; border: 1px solid #ced4da; color: #495057;" />
+
+            <!-- Campo oculto para o CodigoSigaDoc -->
+            <input type="hidden" asp-for="IdSigaDoc" id="idSigaDoc" value="@Model.IdSigaDoc" />
+
+            <!-- Destinatarios -->
+            <div class="form-group">
+                <label asp-for="Destinatarios" class="control-label"></label>
+                <input asp-for="Destinatarios" class="form-control" />
+                <span asp-validation-for="Destinatarios" class="text-danger"></span>
+            </div>
+
+            <!-- Assunto -->
+            <div class="form-group">
+                <label asp-for="Assunto" class="control-label"></label>
+                <input asp-for="Assunto" class="form-control" />
+                <span asp-validation-for="Assunto" class="text-danger"></span>
+            </div>
+
+            <!-- ConteudoEmail -->
+            <div class="form-group">
+                <label asp-for="ConteudoEmail" class="control-label"></label>
+                <textarea asp-for="ConteudoEmail" class="form-control"></textarea>
+                <span asp-validation-for="ConteudoEmail" class="text-danger"></span>
+            </div>
+
+           
+            <!-- DataInicio -->
+            <div class="form-group">
+                <label asp-for="DataInicio" class="control-label"></label>
+                <input asp-for="DataInicio" class="form-control" type="date" />
+                <span asp-validation-for="DataInicio" class="text-danger"></span>
+            </div>
+
+           
+
+            <!-- Checkbox Ativo -->
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Ativo" /> @Html.DisplayNameFor(model => model.Ativo)
+                </label>
+            </div>
+
+            <!-- Botão Submit -->
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <input class="btn btn-primary"
+                       type="button"
+                       value="Voltar"
+                       style="background-color: red; border-color: red;"
+                       onclick="window.location.href='@Url.Action("Index", "ExModeloEmailParamModels")'" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        function updateIdSigaDocAndDescricaoModelo(selectElement) {
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            var codigoSigaDoc = selectedOption.getAttribute("data-id");
+            var nomeModelo = selectedOption.value;
+
+            // Atualiza o valor dos campos ocultos
+            document.getElementById("idSigaDoc").value = codigoSigaDoc;
+            document.getElementById("descricaoModelo").value = nomeModelo;
+        }
+    </script>
+}
+
+<style>
+    /* Aplica uma largura de 500px a todos os inputs e textareas da view, com !important */
+    input[type="text"], textarea {
+        width: 500px !important;
+    }
+</style>

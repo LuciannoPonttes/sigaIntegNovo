@@ -1,0 +1,153 @@
+﻿@model IEnumerable<SigaDocIntegracao.Web.Models.ModuloEmail.ExModeloEmailParamModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<h1>Cadastro de notificação por Modelo</h1>
+
+<p>
+    <a asp-action="Create" style="background-color: green; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+        Novo
+    </a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+           
+            <th class="col-descricao">
+                Notificação
+            </th>
+            <th class="col-descricao">
+                @Html.DisplayNameFor(model => model.DescricaoModelo)
+            </th>
+            <th class="col-destinatarios">
+                @Html.DisplayNameFor(model => model.Destinatarios)
+            </th>
+            <th class="col-assunto">
+                @Html.DisplayNameFor(model => model.Assunto)
+            </th>
+            <th class="col-conteudo">
+                @Html.DisplayNameFor(model => model.ConteudoEmail)
+            </th>
+            <th class="col-data-inicio">
+                @Html.DisplayNameFor(model => model.DataInicio)
+            </th>
+            
+            <th class="col-ativo">
+                @Html.DisplayNameFor(model => model.Ativo)
+            </th>
+            <th class="col-actions">
+                Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="col-descricao">
+                    @Html.DisplayFor(modelItem => item.NomeNot)
+                </td>
+                <td class="col-descricao">
+                    @(item.DescricaoModelo.Length > 90
+                        ? item.DescricaoModelo.Substring(0, 90) + "..."
+                        : item.DescricaoModelo)
+                </td>
+                <td class="col-destinatarios">
+                    @(item.Destinatarios.Length > 90
+                        ? item.Destinatarios.Substring(0, 90) + "..."
+                        : item.Destinatarios)
+                </td>
+                <td class="col-assunto">
+                    @(item.Assunto.Length > 90
+                        ? item.Assunto.Substring(0, 90) + "..."
+                        : item.Assunto)
+                </td>
+                <td class="col-conteudo">
+                    @(item.ConteudoEmail.Length > 90
+                        ? item.ConteudoEmail.Substring(0, 90) + "..."
+                        : item.ConteudoEmail)
+                </td>
+                <td class="col-data-inicio">
+                    @item.DataInicio.ToString("dd/MM/yyyy")
+                </td>
+                <td class="col-ativo">
+                    @Html.DisplayFor(modelItem => item.Ativo)
+                </td>
+                <td class="col-actions">
+                    <a class="action-link" asp-action="Edit" asp-route-id="@item.Id">
+                        <i class="fas fa-edit"></i>
+                    </a> |
+                    <a class="action-link" asp-action="Delete" asp-route-id="@item.Id" style="color: red;">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    table.table {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    th, td {
+        word-wrap: break-word;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .col-id {
+        width: 10%;
+    }
+
+    .col-descricao {
+        width: 20%;
+    }
+
+    .col-destinatarios {
+        width: 20%;
+    }
+
+    .col-conteudo {
+        width: 20%;
+    }
+
+    .col-assunto {
+        width: 10%;
+    }
+
+    .col-data-inicio {
+        width: 20%;
+    }
+
+    .col-data-ultimo-processamento {
+        width: 10%;
+    }
+
+    .col-ativo {
+        width: 10%;
+    }
+
+    .col-actions {
+        width: 15%;
+        text-align: center;
+    }
+
+    .action-link {
+        margin: 0 5px;
+        text-decoration: none;
+        color: #007bff;
+    }
+
+        .action-link:hover {
+            text-decoration: underline;
+        }
+</style>
