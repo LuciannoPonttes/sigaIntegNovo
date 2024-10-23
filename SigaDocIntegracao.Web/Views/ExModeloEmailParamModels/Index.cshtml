@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SigaDocIntegracao.Web.Models.ModuloEmail.ExModeloEmailParamModel>
+﻿@using SigaDocIntegracao.Web.ViewModels
+@model ListarExModeloEmailParamPaginadoViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -10,144 +11,105 @@
 
 <h1>Cadastro de notificação por Modelo</h1>
 
-<p>
-    <a asp-action="Create" style="background-color: green; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
-        Novo
-    </a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-           
-            <th class="col-descricao">
-                Notificação
-            </th>
-            <th class="col-descricao">
-                @Html.DisplayNameFor(model => model.DescricaoModelo)
-            </th>
-            <th class="col-destinatarios">
-                @Html.DisplayNameFor(model => model.Destinatarios)
-            </th>
-            <th class="col-assunto">
-                @Html.DisplayNameFor(model => model.Assunto)
-            </th>
-            <th class="col-conteudo">
-                @Html.DisplayNameFor(model => model.ConteudoEmail)
-            </th>
-            <th class="col-data-inicio">
-                @Html.DisplayNameFor(model => model.DataInicio)
-            </th>
-            
-            <th class="col-ativo">
-                @Html.DisplayNameFor(model => model.Ativo)
-            </th>
-            <th class="col-actions">
-                Ações
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td class="col-descricao">
-                    @Html.DisplayFor(modelItem => item.NomeNot)
-                </td>
-                <td class="col-descricao">
-                    @(item.DescricaoModelo.Length > 90
-                        ? item.DescricaoModelo.Substring(0, 90) + "..."
-                        : item.DescricaoModelo)
-                </td>
-                <td class="col-destinatarios">
-                    @(item.Destinatarios.Length > 90
-                        ? item.Destinatarios.Substring(0, 90) + "..."
-                        : item.Destinatarios)
-                </td>
-                <td class="col-assunto">
-                    @(item.Assunto.Length > 90
-                        ? item.Assunto.Substring(0, 90) + "..."
-                        : item.Assunto)
-                </td>
-                <td class="col-conteudo">
-                    @(item.ConteudoEmail.Length > 90
-                        ? item.ConteudoEmail.Substring(0, 90) + "..."
-                        : item.ConteudoEmail)
-                </td>
-                <td class="col-data-inicio">
-                    @item.DataInicio.ToString("dd/MM/yyyy")
-                </td>
-                <td class="col-ativo">
-                    @Html.DisplayFor(modelItem => item.Ativo)
-                </td>
-                <td class="col-actions">
-                    <a class="action-link" asp-action="Edit" asp-route-id="@item.Id">
-                        <i class="fas fa-edit"></i>
-                    </a> |
-                    <a class="action-link" asp-action="Delete" asp-route-id="@item.Id" style="color: red;">
-                        <i class="fas fa-trash"></i>
-                    </a>
-                </td>
-            </tr>
+<div class="inbox-body" style="margin-top:20px;">
+    <div class="mail-option">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="form-group" style="flex: 1;">
+                <label for="searchInput" class="fw-bold">Pesquisar:</label>
+                <input type="text" id="searchInput" placeholder="Buscar por nome ou e-mail" onkeyup="filter()" class="form-control form-control-sm" style="margin-bottom: 10px; width: 300px;">
+            </div>
+            <a asp-action="Create" style="background-color: green; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                Novo
+            </a>
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-primary" onclick="clearSearch()">
+                Limpar
+            </button>
+        </div>
+
+        <div id="contentContainer">
+            @await Html.PartialAsync("_TabelaEmailPartial.cshtml", Model)
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    function filter() {
+        var url = `/ExModeloEmailParamModels/IndexFilter?pageIndex=${currentPage}`;
+
+        var input = document.getElementById("searchInput").value;
+
+        if (input && input.length >= 3) {
+            url += `&query=${input}`
+        } else if (input && input.length <= 3) {
+            return;
         }
-    </tbody>
-</table>
 
-<style>
-    table.table {
-        table-layout: fixed;
-        width: 100%;
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'text/html'
+            }
+        })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("contentContainer").innerHTML = data;
+            })
+            .catch(error => console.error('Erro:', error));
     }
 
-    th, td {
-        word-wrap: break-word;
-        padding: 8px;
-        text-align: left;
+    function clearSearch() {
+        currentPage = 0;
+        status = null;
+
+        fetch(`/ExModeloEmailParamModels/IndexFilter?pageIndex=${currentPage}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'text/html'
+            }
+        })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("contentContainer").innerHTML = data;
+                document.getElementById("searchInput").value = '';
+            })
+            .catch(error => console.error('Erro:', error));
     }
 
-    .col-id {
-        width: 10%;
+    function changePage(pageIndex) {
+        currentPage = pageIndex;
+        get();
     }
 
-    .col-descricao {
-        width: 20%;
-    }
+    function get() {
+        var input = document.getElementById("searchInput").value;
 
-    .col-destinatarios {
-        width: 20%;
-    }
+        var url = `/ExModeloEmailParamModels/IndexFilter?pageIndex=${currentPage}`;
 
-    .col-conteudo {
-        width: 20%;
-    }
-
-    .col-assunto {
-        width: 10%;
-    }
-
-    .col-data-inicio {
-        width: 20%;
-    }
-
-    .col-data-ultimo-processamento {
-        width: 10%;
-    }
-
-    .col-ativo {
-        width: 10%;
-    }
-
-    .col-actions {
-        width: 15%;
-        text-align: center;
-    }
-
-    .action-link {
-        margin: 0 5px;
-        text-decoration: none;
-        color: #007bff;
-    }
-
-        .action-link:hover {
-            text-decoration: underline;
+        if (input && input.length >= 3) {
+            url += `&query=${input}`
+        } else if (input && input.length <= 3) {
+            return;
         }
-</style>
+
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'text/html'
+            }
+        })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("contentContainer").innerHTML = data;
+            })
+            .catch(error => console.error('Erro:', error));
+    }
+
+    let currentPage = 0;
+    let status = null;
+</script>

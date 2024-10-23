@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using SigaDocIntegracao.Web.Models.ModuloEmail;
 using SigaDocIntegracao.Web.Persistence;
 using SigaDocIntegracao.Web.Service;
+using SigaDocIntegracao.Web.UsuarioContexto.Models;
+using SigaDocIntegracao.Web.ViewModels;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace SigaDocIntegracao.Web.Controllers
@@ -24,11 +26,18 @@ namespace SigaDocIntegracao.Web.Controllers
         // GET: ExModeloEmailParamModels
         public async Task<IActionResult> Index()
         {
-            var orderedList = await _context.ModelExModeloEmailParam
-                                            .OrderByDescending(e => e.DataCriacao)
-                                            .ToListAsync();
+            var viewModel = await BuscarEmailsPaginado();
 
-            return View(orderedList);
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> IndexFilter(string query = null,
+            int pageIndex = 0,
+            int pageSize = 10)
+        {
+            var viewModel = await BuscarEmailsPaginado(query, pageIndex, pageSize);
+
+            return PartialView("_TabelaEmailPartial", viewModel);
         }
 
         // GET: ExModeloEmailParamModels/Details/5
@@ -214,5 +223,34 @@ namespace SigaDocIntegracao.Web.Controllers
         {
             return _context.ModelExModeloEmailParam.Any(e => e.Id == id);
         }
+
+        private async Task<ListarExModeloEmailParamPaginadoViewModel> BuscarEmailsPaginado(string search = null,
+            int pageIndex = 0,
+            int pageSize = 10)
+        {
+            var query = _context.ModelExModeloEmailParam.OrderBy(e => e.NomeNot).AsQueryable();
+            var totalQuery = _context.ModelExModeloEmailParam.OrderBy(e => e.NomeNot).AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(e => e.NomeNot.ToUpper().Contains(search.ToUpper()));
+                totalQuery = totalQuery.Where(e => e.NomeNot.ToUpper().Contains(search.ToUpper()));
+            }
+
+            var orderedList = await query.Skip(pageIndex * pageSize).Take(pageSize).ToListAsync();
+            var totalCount = await totalQuery.CountAsync();
+
+            ListarExModeloEmailParamPaginadoViewModel viewModel = new()
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                TotalCount = totalCount,
+                ExModeloEmailParamModels = orderedList,
+                TotalPages = (int)Math.Ceiling((double)totalCount / pageSize)
+            };
+
+            return viewModel;
+        }
+
     }
 }

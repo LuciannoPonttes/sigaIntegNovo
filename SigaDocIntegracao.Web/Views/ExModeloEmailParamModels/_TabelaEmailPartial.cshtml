@@ -1,0 +1,109 @@
+﻿@using SigaDocIntegracao.Web.ViewModels
+@model ListarExModeloEmailParamPaginadoViewModel
+
+@if (Model != null && Model.TotalCount > 0 && Model.ExModeloEmailParamModels != null)
+{
+    <table class="table table-inbox table-hover table-responsive-md table-striped" style="border:2px medium black;">
+        <thead class="thead-light">
+            <tr class="unread">
+                <th class="col-sm-2 view-message  dont-show">
+                    Notificação
+                </th>
+                <th class="col-sm-2 view-message  dont-show">
+                    Modelo
+                </th>
+                <th class="col-sm-2 view-message  dont-show">
+                    Destinatários
+                </th>
+                <th class="col-sm-2 view-message  dont-show">
+                    Assunto
+                </th>
+                <th class="col-sm-2 view-message  dont-show">
+                    Conteúdo
+                </th>
+                <th class="col-sm-2 view-message  dont-show">
+                    Data de Início
+                </th>
+
+                <th class="col-sm-2 view-message  dont-show">
+                    Ativo
+                </th>
+                <th class="col-sm-2 view-message  dont-show">
+                    Ações
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ExModeloEmailParamModels)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomeNot)
+                    </td>
+                    <td>
+                        @(item.DescricaoModelo.Length > 90
+                            ? item.DescricaoModelo.Substring(0, 90) + "..."
+                            : item.DescricaoModelo)
+                    </td>
+                    <td>
+                        @(item.Destinatarios.Length > 90
+                            ? item.Destinatarios.Substring(0, 90) + "..."
+                            : item.Destinatarios)
+                    </td>
+                    <td>
+                        @(item.Assunto.Length > 90
+                            ? item.Assunto.Substring(0, 90) + "..."
+                            : item.Assunto)
+                    </td>
+                    <td>
+                        @(item.ConteudoEmail.Length > 90
+                            ? item.ConteudoEmail.Substring(0, 90) + "..."
+                            : item.ConteudoEmail)
+                    </td>
+                    <td>
+                        @item.DataInicio.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ativo)
+                    </td>
+                    <td>
+                        <span class="btn-group pull-right">
+                            <a class="btn btn-xs" asp-action="Edit" asp-route-id="@item.Id" style="background-color: blue;">
+                                <i class="bi-pencil" style="font-size: 15px; color: white;"></i>
+                            </a>
+                            &nbsp;&nbsp;
+                            <a class="btn btn-xs" asp-action="Delete" asp-route-id="@item.Id" style="font-size: 15px; background-color: red; color: white;">
+                                <i class="bi-trash"></i>
+                            </a>
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item @(Model.PageIndex == 0 ? "disabled" : "")">
+                    <a class="page-link" href="#" onclick="changePage(@(Model.PageIndex - 1))">Anterior</a>
+                </li>
+                @for (int i = 0; i < Model.TotalPages; i++)
+                {
+                    <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                        <a class="page-link" href="#" onclick="changePage(@i)">@(i + 1)</a>
+                    </li>
+                }
+                <li class="page-item @(Model.PageIndex >= Model.TotalPages - 1 ? "disabled" : "")">
+                    <a class="page-link" href="#" onclick="changePage(@(Model.PageIndex + 1))">Próximo</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+}
+else
+{
+    <div class="alert alert-info" style="width: 30rem; margin: 3rem auto 0; text-align: center;">
+        <p>Nenhum usuário encontrado.</p>
+    </div>
+}
