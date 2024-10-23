@@ -73,6 +73,9 @@ namespace SigaDocIntegracao.Web.Controllers
         {
             HttpContext.User = null;
             await HttpContext.SignOutAsync();
+            HttpContext.Session.Clear();
+            Response.Cookies.Delete(".AspNetCore.Cookies");
+
             return RedirectToAction("Index", "Login");
         }
 

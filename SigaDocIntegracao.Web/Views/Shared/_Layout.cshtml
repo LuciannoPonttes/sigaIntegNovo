@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="~/SigaDocIntegracao.Web.styles.css" asp-append-version="true" />
 </head>
 <body>
-    @if (User.Identity.IsAuthenticated.Equals(true))
+    @if (User.Identity.IsAuthenticated.Equals(true) && ViewData["Title"] != "Login")
     {
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow" style="padding: 0.5rem 7rem 0 7rem;">
