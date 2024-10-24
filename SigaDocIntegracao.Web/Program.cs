@@ -14,14 +14,14 @@ builder.Services.AddHostedService<TaskModuloEmail>();
 
 builder.Services.AddSingleton<TaskModuloCarga>();
 builder.Services.AddHostedService<TaskModuloCarga>();
-/*
+
 builder.Services.AddEntityFrameworkNpgsql()
     .AddDbContext<Contexto>(options =>
     options.UseNpgsql((Environment.GetEnvironmentVariable("CONNECTION_STRING_SIGA_DOC_INTEG"))));
- PARA RODAR MIGRATION*/
+/*PARA RODAR MIGRATION
 builder.Services.AddDbContext<Contexto>(options =>
-    options.UseNpgsql(("Host=192.168.0.185;Port=5432;Database=sigadocintegracaov2;Username=postgres;Password=admin123;")));
-
+   options.UseNpgsql(("Host=192.168.0.185;Port=5432;Database=sigadocintegracaov2;Username=postgres;Password=admin123;")));
+*/
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {

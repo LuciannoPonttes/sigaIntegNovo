@@ -10,6 +10,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SigaDocIntegracao.Web.styles.css" asp-append-version="true" />
+    <style>
+        html, body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1; /* Este container ocupará o espaço disponível */
+            padding-bottom: 60px; /* Espaço inferior para evitar sobreposição com o footer */
+        }
+
+        footer {
+            background-color: white; /* Adicione uma cor de fundo se desejar */
+            padding: 1rem; /* Espaçamento interno do footer */
+            text-align: center; /* Centraliza o texto do footer */
+            margin-top: auto; /* Empurra o footer para o final da página */
+            margin-bottom: 40px; /* Ajusta o espaço inferior do footer */
+        }
+    </style>
 </head>
 <body>
     @if (User.Identity.IsAuthenticated.Equals(true) && ViewData["Title"] != "Login")
@@ -25,8 +45,16 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        
+
+                        <!-- Mover o item "Admin" para o início da barra de navegação -->
                         <ul class="navbar-nav d-flex flex-grow-1 justify-content-start">
+                            @if (User.HasClaim(c => c.Type == "Tipo" && c.Value == "Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuário</a>
+                                </li>
+                            }
+
                             <li class="nav-item dropdown">
                                 @if (User.HasClaim(c => c.Type == "Permissao" && !string.IsNullOrEmpty(c.Value) && c.Value.Contains("Módulo carga")))
                                 {
@@ -54,15 +82,7 @@
                                     </ul>
                                 }
                             </li>
-
-                            @if (User.HasClaim(c => c.Type == "Tipo" && c.Value == "Admin"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Admin</a>
-                                </li>
-                            }
                         </ul>
-
 
                         <ul class="navbar-nav">
                             <li class="nav-item">
@@ -84,6 +104,7 @@
     </div>
 
     <footer class="border-top footer text-muted">
+        <p>© 2024 SigaDoc. Todos os direitos reservados.</p>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

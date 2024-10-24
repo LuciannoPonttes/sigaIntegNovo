@@ -21,7 +21,6 @@
     </div>
 </div>
 
-
 <div class="container mt-4">
     <h1>@ViewData["Title"]</h1>
 
@@ -29,16 +28,17 @@
         <div class="form-group mb-3">
             <label for="Nome" class="fw-bold">Nome:</label>
             <input type="text" id="Nome" name="Nome" class="form-control" placeholder="Digite o nome" required />
+            <ul id="nomeSuggestions" class="list-group mt-1" style="display: none;"></ul>
         </div>
 
         <div class="form-group mb-3">
             <label for="Email" class="fw-bold">Email:</label>
-            <input type="email" id="Email" name="Email" class="form-control" placeholder="Digite o email" required />
+            <input type="email" id="Email" name="Email" class="form-control" placeholder="Preenchido automaticamente" readonly required />
         </div>
 
         <div class="form-group mb-3">
             <label for="Matricula" class="fw-bold">Matrícula:</label>
-            <input type="text" id="matricula" name="matricula" class="form-control" placeholder="Digite a matrícula" required />
+            <input type="text" id="Matricula" name="Matricula" class="form-control" placeholder="Preenchido automaticamente" readonly required />
         </div>
 
         <div class="form-group mb-3">
@@ -64,15 +64,48 @@
                 }
             </div>
         </div>
-      
+
         <button type="submit" class="btn btn-success">Criar</button>
         <a class="btn btn-secondary" asp-area="" asp-controller="Usuario" asp-action="Index" style="margin-left: 10px;">Cancelar</a>
     </form>
 </div>
 
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        var nomeInput = document.getElementById("Nome");
+        var nomeSuggestions = document.getElementById("nomeSuggestions");
+        var matriculaInput = document.getElementById("Matricula");
+        var emailInput = document.getElementById("Email");
+
+        nomeInput.addEventListener("input", function () {
+            var nomeValue = nomeInput.value;
+
+            if (nomeValue.length >= 3) {
+                fetch('https://s1websrw.infranet.gov.br/wscorp_rh/empregados/pesquisa?param.nome=' + nomeValue)
+                    .then(response => response.json())
+                    .then(data => {
+                        nomeSuggestions.innerHTML = '';
+                        nomeSuggestions.style.display = 'block';
+
+                        data.forEach(function (item) {
+                            var li = document.createElement('li');
+                            li.classList.add('list-group-item');
+                            li.textContent = item.Nome;
+                            li.addEventListener('click', function () {
+                                nomeInput.value = item.Nome;
+                                matriculaInput.value = item.Matricula;
+                                emailInput.value = item.EmailString;
+                                nomeSuggestions.style.display = 'none';
+                            });
+                            nomeSuggestions.appendChild(li);
+                        });
+                    });
+            } else {
+                nomeSuggestions.style.display = 'none';
+            }
+        });
+
+        // Exibe o toast se houver uma mensagem de erro
         var errorMessage = '@TempData["ErrorMessage"]';
         if (errorMessage) {
             var toastEl = document.getElementById('errorToast');

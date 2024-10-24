@@ -5,6 +5,7 @@ using SigaDocIntegracao.Web.UsuarioContexto.Models;
 using SigaDocIntegracao.Web.UsuarioContexto.Services;
 using SigaDocIntegracao.Web.UsuarioContexto.ViewModel;
 using System.Security.Claims;
+using Novell.Directory.Ldap;
 
 namespace SigaDocIntegracao.Web.Controllers
 {
@@ -88,9 +89,33 @@ namespace SigaDocIntegracao.Web.Controllers
 
         private bool Autenticacao(string matricula, string senha)
         {
-            return true;
+           // return true;
+            try
+            {
+                var username = string.Format(@"{0}@{1}", matricula, "infraero.gov.br");
+                using (var connection = new LdapConnection { SecureSocketLayer = false })
+                {
+                    connection.Connect("infraero.gov.br", 389);
+                    connection.Bind(username, senha);
+                    if (connection.Bound)
+                    {
+                        return true;
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+
         }
 
-        
+
     }
 }

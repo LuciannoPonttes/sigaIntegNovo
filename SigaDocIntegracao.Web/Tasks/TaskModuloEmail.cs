@@ -8,10 +8,8 @@ using SigaDocIntegracao.Web.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.Xml;
 using System.Threading;
 using System.Threading.Tasks;
-
 
 namespace SigaDocIntegracao.Web.Tasks
 {
@@ -21,18 +19,45 @@ namespace SigaDocIntegracao.Web.Tasks
         private readonly IServiceScopeFactory _scopeFactory;
         private Timer _timer;
         private int Intervalo;
+        private TimeSpan? HorarioInicio;
 
         public TaskModuloEmail(ILogger<TaskModuloEmail> logger, IConfiguration config, IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             Intervalo = int.TryParse(Environment.GetEnvironmentVariable("INTERVALO_EMAIL"), out var intervalo) ? intervalo : 10;
             _scopeFactory = scopeFactory;
+
+            // Pega o horário de início da variável de ambiente
+            var horarioInicioStr = Environment.GetEnvironmentVariable("HORARIO_INICIO_EMAIL") ?? "12:00";
+            if (TimeSpan.TryParse(horarioInicioStr, out var horarioInicio))
+            {
+                HorarioInicio = horarioInicio;
+            }
+            else
+            {
+                _logger.LogWarning($"Formato inválido para HORARIO_INICIO_EMAIL: {horarioInicioStr}. Usando horário padrão (12:00).");
+                HorarioInicio = new TimeSpan(12, 0, 0); // Padrão 12:00 se inválido
+            }
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Serviço iniciado.");
-            //_timer = new Timer(ExecuteTask, null, TimeSpan.Zero, TimeSpan.FromMinutes(Intervalo));
+
+            // Calcula o tempo até o horário especificado
+            var agora = DateTime.Now;
+            var proximoHorarioInicio = DateTime.Today.Add(HorarioInicio.Value);
+
+            if (agora > proximoHorarioInicio)
+            {
+                proximoHorarioInicio = proximoHorarioInicio.AddDays(1); // Se já passou, agenda para o próximo dia
+            }
+
+            var tempoAteInicio = proximoHorarioInicio - agora;
+            _logger.LogInformation($"Serviço será iniciado em {tempoAteInicio.TotalMinutes} minutos às {proximoHorarioInicio}.");
+
+            // Inicializa o Timer para iniciar no horário especificado
+            _timer = new Timer(ExecuteTask, null, tempoAteInicio, TimeSpan.FromMinutes(Intervalo));
             return Task.CompletedTask;
         }
 
@@ -51,18 +76,19 @@ namespace SigaDocIntegracao.Web.Tasks
                     List<ExModeloEmailParamModel> exModeloEmailParamModelsList = await emailService.GetModelosCadastradosAsync();
 
                     List<string> idModelosList = exModeloEmailParamModelsList
-                                                          .Select(model => model.IdSigaDoc)
-                                                        .ToList();
+                                                      .Select(model => model.IdSigaDoc)
+                                                    .ToList();
                     List<ExDocAssinadoModel> documentosAssinadosList = new List<ExDocAssinadoModel>();
                     foreach (ExModeloEmailParamModel modelo in exModeloEmailParamModelsList)
                     {
 
                         documentosAssinadosList.AddRange(emailService.GetDocumentosAssinados(modelo));
 
-                        if (modelo.Ativo) {
+                        if (modelo.Ativo)
+                        {
                             modelo.DataUltimoProcessamento = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
                             context.Update(modelo);
-                          
+
                             await context.SaveChangesAsync();
                         }
                     }
@@ -155,7 +181,6 @@ namespace SigaDocIntegracao.Web.Tasks
                             }
                         }
                     }
-              
                 }
             }
             catch (Exception ex)

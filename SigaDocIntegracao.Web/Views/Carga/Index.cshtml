@@ -1,2 +1,298 @@
-﻿
-<h1>Módulo Automática</h1>
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caixas de Seleção</title>
+    <style>
+        body {
+            text-align: left; /* Alinha todo o texto à esquerda */
+        }
+
+        h1 {
+            font-size: 35px; /* Tamanho da fonte do título */
+            margin-bottom: 20px; /* Espaçamento abaixo do título */
+            margin-left: 150px; /* Adiciona margem à esquerda */
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5 colunas */
+            gap: 10px; /* Espaçamento entre os itens */
+            max-width: 1500px; /* Largura máxima do container */
+            margin-left: 180px; /* Adiciona margem à esquerda */
+        }
+
+        .item {
+            display: flex; /* Flex para alinhar checkbox e label */
+            align-items: center; /* Alinha verticalmente os itens */
+        }
+
+            .item label {
+                margin-left: 8px; /* Espaçamento entre checkbox e label */
+            }
+
+        .button-container {
+            text-align: center; /* Centraliza o botão */
+            margin-top: 20px; /* Espaçamento acima do botão */
+        }
+    </style>
+</head>
+<body>
+    <h1>Carga Manual</h1> <!-- Título alinhado à esquerda -->
+    <form action="/seu-endpoint" method="POST">
+        <div class="container">
+            <div class="item">
+                <input type="checkbox" id="selectAll" onclick="toggleCheckboxes(this)">
+                <label for="selectAll">Todos</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="AB" name="item[]" value="AB">
+                <label for="AB">AB</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="AT" name="item[]" value="AT">
+                <label for="AT">AT</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="AV" name="item[]" value="AV">
+                <label for="AV">AV</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="AW" name="item[]" value="AW">
+                <label for="AW">AW</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="BA" name="item[]" value="BA">
+                <label for="BA">BA</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="CP" name="item[]" value="CP">
+                <label for="CP">CP</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="DI" name="item[]" value="DI">
+                <label for="DI">DI</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="DO" name="item[]" value="DO">
+                <label for="DO">DO</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="DU" name="item[]" value="DU">
+                <label for="DU">DU</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="EA" name="item[]" value="EA">
+                <label for="EA">EA</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="EL" name="item[]" value="EL">
+                <label for="EL">EL</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="FF" name="item[]" value="FF">
+                <label for="FF">FF</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="GL" name="item[]" value="GL">
+                <label for="GL">GL</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="IX" name="item[]" value="IX">
+                <label for="IX">IX</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="JG" name="item[]" value="JG">
+                <label for="JG">JG</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="KS" name="item[]" value="KS">
+                <label for="KS">KS</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="LU" name="item[]" value="LU">
+                <label for="LU">LU</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="NV" name="item[]" value="NV">
+                <label for="NV">NV</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="OC" name="item[]" value="OC">
+                <label for="OC">OC</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="OS" name="item[]" value="OS">
+                <label for="OS">OS</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="PM" name="item[]" value="PM">
+                <label for="PM">PM</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="TM" name="item[]" value="TM">
+                <label for="TM">TM</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="ZS" name="item[]" value="ZS">
+                <label for="ZS">ZS</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="AA" name="item[]" value="AA">
+                <label for="AA">AA</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="AF" name="item[]" value="AF">
+                <label for="AF">AF</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="BU" name="item[]" value="BU">
+                <label for="BU">BU</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="BW" name="item[]" value="BW">
+                <label for="BW">BW</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="CI" name="item[]" value="CI">
+                <label for="CI">CI</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="DB" name="item[]" value="DB">
+                <label for="DB">DB</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="DN" name="item[]" value="DN">
+                <label for="DN">DN</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="EK" name="item[]" value="EK">
+                <label for="EK">EK</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="GR" name="item[]" value="GR">
+                <label for="GR">GR</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="GX" name="item[]" value="GX">
+                <label for="GX">GX</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="HB" name="item[]" value="HB">
+                <label for="HB">HB</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="HE" name="item[]" value="HE">
+                <label for="HE">HE</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="IH" name="item[]" value="IH">
+                <label for="IH">IH</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="KD" name="item[]" value="KD">
+                <label for="KD">KD</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="KP" name="item[]" value="KP">
+                <label for="KP">KP</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="LP" name="item[]" value="LP">
+                <label for="LP">LP</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="MC" name="item[]" value="MC">
+                <label for="MC">MC</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="MM" name="item[]" value="MM">
+                <label for="MM">MM</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="NL" name="item[]" value="NL">
+                <label for="NL">NL</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="PI" name="item[]" value="PI">
+                <label for="PI">PI</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="PS" name="item[]" value="PS">
+                <label for="PS">PS</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="QU" name="item[]" value="QU">
+                <label for="QU">QU</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="RS" name="item[]" value="RS">
+                <label for="RS">RS</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="SD" name="item[]" value="SD">
+                <label for="SD">SD</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="SK" name="item[]" value="SK">
+                <label for="SK">SK</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="SP" name="item[]" value="SP">
+                <label for="SP">SP</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="SS" name="item[]" value="SS">
+                <label for="SS">SS</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="TM" name="item[]" value="TM">
+                <label for="TM">TM</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="TX" name="item[]" value="TX">
+                <label for="TX">TX</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="UM" name="item[]" value="UM">
+                <label for="UM">UM</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="VD" name="item[]" value="VD">
+                <label for="VD">VD</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="VJ" name="item[]" value="VJ">
+                <label for="VJ">VJ</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="VQ" name="item[]" value="VQ">
+                <label for="VQ">VQ</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="XZ" name="item[]" value="XZ">
+                <label for="XZ">XZ</label>
+            </div>
+            <div class="item">
+                <input type="checkbox" id="ZR" name="item[]" value="ZR">
+                <label for="ZR">ZR</label>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="btn btn-success" type="submit">Enviar</button>
+        </div>
+    </form>
+
+    <script>
+        function toggleCheckboxes(selectAllCheckbox) {
+            // Obtém todos os checkboxes do formulário
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]:not(#selectAll)');
+            // Define o estado de todos os checkboxes de acordo com o checkbox "Selecionar Todos"
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        }
+    </script>
+</body>
+</html>

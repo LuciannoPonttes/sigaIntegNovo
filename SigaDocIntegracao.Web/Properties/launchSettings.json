@@ -35,6 +35,7 @@
         "PORT_NUMBER": "2525",
         "EMAIL_FROM_ADDRESS": "t031842941@infraero.gov.br",
         "INTERVALO_EMAIL": "5",
+        "HORARIO_INICIO_EMAIL": "18:40",
         "CONNECTION_STRING_SIGA_DOC_INTEG": "Host=10.0.18.63;Port=5432;Database=ifrsigadocintegracao;Username=usr_sigadocintegracao;Password=infraero;",
         "URL_DOC_EMAIL_SIGADOC": "https://sigadoc-hml.infraero.gov.br/sigaex/app/expediente/doc/exibir?sigla="
       },

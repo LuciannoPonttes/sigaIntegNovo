@@ -51,9 +51,9 @@ namespace SigaDocIntegracao.Web.Persistence.DaoEmail
                      inner join ex_mobil mob on doc.id_doc = mob.id_doc
                      inner join ex_movimentacao mov
                          on mov.id_mobil = mob.id_mobil
-                         and mov.dt_mov >= to_date(:data, 'dd/mm/yyyy hh24:mi') -- data/hora de última execução
+                         and mov.dt_ini_mov >= to_date(:data, 'dd/mm/yyyy hh24:mi') -- data/hora de última execução
                      where 
-                          a.assinantes = a.assinaturas 
+                         a.assinantes = a.assinaturas and a.assinantes != 0
                           and doc.id_mod in (
                               select id_mod 
                               from ex_modelo
