@@ -56,7 +56,7 @@ namespace SigaDocIntegracao.Web.Persistence.DaoEmail
                          a.assinantes = a.assinaturas and a.assinantes != 0
                           and doc.id_mod in (
                               select id_mod 
-                              from ex_modelo
+                              from ex_modeloteste
                               where his_id_ini in (:idsSigaDoc)
          )";
 
