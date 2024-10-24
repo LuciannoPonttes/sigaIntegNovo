@@ -60,7 +60,9 @@ namespace SigaDocIntegracao.Web.Controllers
 
                 if (result is null)
                 {
+                    var permissoesDisponiveis = await _usuarioService.BuscarPermissoesDisponiveisAsync();
                     TempData["ErrorMessage"] = $"A matrícula {viewModel.Matricula} já foi cadastrada.";
+                    viewModel.PermissoesDisponiveis = permissoesDisponiveis;
                     return View(viewModel);
                 }
 
