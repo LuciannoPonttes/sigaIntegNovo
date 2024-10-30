@@ -1,4 +1,7 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function showLoader() {
+    document.getElementById("loader-overlay").style.display = "flex";
+}
 
-// Write your JavaScript code.
+function hideLoading() {
+    document.getElementById("loader-overlay").style.display = "none";
+}

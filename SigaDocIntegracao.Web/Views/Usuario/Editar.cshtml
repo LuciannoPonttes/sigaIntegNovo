@@ -7,7 +7,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form asp-controller="Usuario" asp-action="Editar" method="post">
+<form asp-controller="Usuario" asp-action="Editar" method="post" onsubmit="showLoader()">
     <div class="form-group mb-3">
         <label asp-for="Nome" class="control-label"></label>
         <input asp-for="Nome" class="form-control" />
@@ -61,6 +61,6 @@
 
     <input type="hidden" asp-for="Id" value="@Model.Id" />
 
-    <button type="submit" class="btn btn-primary mt-3">Atualizar</button>
-    <a asp-area="" asp-controller="Usuario" asp-action="Index" class="btn btn-secondary mt-3">Cancelar</a>
+    <button type="submit" class="btn btn-primary mt-3" onsubmit="showLoader()">Atualizar</button>
+    <a asp-area="" asp-controller="Usuario" asp-action="Index" class="btn btn-secondary mt-3" onclick="showLoader()">Cancelar</a>
 </form>

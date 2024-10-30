@@ -19,7 +19,7 @@
                 <label for="searchInput" class="fw-bold">Pesquisar:</label>
                 <input type="text" id="searchInput" placeholder="Buscar por nome ou e-mail" onkeyup="filter()" class="form-control form-control-sm" style="margin-bottom: 10px; width: 300px;">
             </div>
-            <a asp-action="Create" style="background-color: green; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+            <a asp-action="Create" style="background-color: green; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;" onclick="showLoader()">
                 Novo
             </a>
         </div>
@@ -50,6 +50,8 @@
             return;
         }
 
+        showLoader();
+
         fetch(url, {
             method: 'GET',
             headers: {
@@ -59,13 +61,19 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById("contentContainer").innerHTML = data;
+                hideLoading();
             })
-            .catch(error => console.error('Erro:', error));
+            .catch(error => {
+                console.error('Erro:', error);
+                hideLoading();
+            });
     }
 
     function clearSearch() {
         currentPage = 0;
         status = null;
+
+        showLoader();
 
         fetch(`/ExModeloEmailParamModels/IndexFilter?pageIndex=${currentPage}`, {
             method: 'GET',
@@ -77,8 +85,12 @@
             .then(data => {
                 document.getElementById("contentContainer").innerHTML = data;
                 document.getElementById("searchInput").value = '';
+                hideLoading();
             })
-            .catch(error => console.error('Erro:', error));
+            .catch(error => {
+                console.error('Erro:', error);
+                hideLoading();
+            });
     }
 
     function changePage(pageIndex) {
@@ -97,6 +109,8 @@
             return;
         }
 
+        showLoader();
+
         fetch(url, {
             method: 'GET',
             headers: {
@@ -106,8 +120,12 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById("contentContainer").innerHTML = data;
+                hideLoading();
             })
-            .catch(error => console.error('Erro:', error));
+            .catch(error => {
+                console.error('Erro:', error);
+                hideLoading();
+            });
     }
 
     let currentPage = 0;

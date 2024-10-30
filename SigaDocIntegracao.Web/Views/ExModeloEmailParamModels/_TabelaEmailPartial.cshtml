@@ -68,11 +68,11 @@
                     </td>
                     <td>
                         <span class="btn-group pull-right">
-                            <a class="btn btn-xs" asp-action="Edit" asp-route-id="@item.Id" style="background-color: blue;">
+                            <a class="btn btn-xs" asp-action="Edit" asp-route-id="@item.Id" style="background-color: blue;" onclick="showLoader();">
                                 <i class="bi-pencil" style="font-size: 15px; color: white;"></i>
                             </a>
                             &nbsp;&nbsp;
-                            <a class="btn btn-xs" asp-action="Delete" asp-route-id="@item.Id" style="font-size: 15px; background-color: red; color: white;">
+                            <a class="btn btn-xs" asp-action="Delete" asp-route-id="@item.Id" style="font-size: 15px; background-color: red; color: white;" onclick="showLoader();">
                                 <i class="bi-trash"></i>
                             </a>
                         </span>

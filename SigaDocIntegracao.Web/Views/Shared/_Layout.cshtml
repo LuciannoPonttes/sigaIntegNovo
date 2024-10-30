@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SigaDocIntegracao.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SigaDocIntegracao.Web.styles.css" asp-append-version="true" />   
 </head>
 <body>
     @if (User.Identity.IsAuthenticated.Equals(true) && ViewData["Title"] != "Login")
@@ -17,7 +17,7 @@
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow" style="padding: 0.5rem 7rem 0 7rem;">
                 <div class="container-fluid">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" onclick="showLoader()">
                         <img src="~/img/logo_infraero.png" alt="Logo Infraero" style="height: 30px; margin-right: 10px;" />
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -35,7 +35,7 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarCarga">
                                         <li>
-                                            <a class="dropdown-item" asp-area="" asp-controller="Carga" asp-action="Index">Carga automática</a>
+                                            <a class="dropdown-item" asp-area="" asp-controller="Carga" asp-action="Index" onclick="showLoader()">Carga automática</a>
                                         </li>
                                     </ul>
                                 }
@@ -49,7 +49,7 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarEmail">
                                         <li>
-                                            <a class="dropdown-item" asp-area="" asp-controller="ExModeloEmailParamModels" asp-action="Index">Gerenciar notificação</a>
+                                            <a class="dropdown-item" asp-area="" asp-controller="ExModeloEmailParamModels" asp-action="Index" onclick="showLoader()">Gerenciar notificação</a>
                                         </li>
                                     </ul>
                                 }
@@ -58,7 +58,7 @@
                             @if (User.HasClaim(c => c.Type == "Tipo" && c.Value == "Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Admin</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index" onclick="showLoader()">Admin</a>
                                 </li>
                             }
                         </ul>
@@ -69,7 +69,7 @@
                                 <span class="nav-link text-dark">@User.FindFirst(ClaimTypes.Email)?.Value</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Login" asp-action="Logout">Sair</a>
+                                <a class="nav-link text-dark" asp-controller="Login" asp-action="Logout" onclick="showLoader()">Sair</a>
                             </li>
                         </ul>
                     </div>
@@ -81,6 +81,10 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+    </div>
+
+    <div id="loader-overlay">
+        <div class="loader"></div>
     </div>
 
     <footer class="border-top footer text-muted">

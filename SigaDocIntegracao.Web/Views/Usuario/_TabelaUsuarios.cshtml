@@ -28,12 +28,12 @@
                         <td>@usuario.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")</td>
                         <td>
                             <span class="btn-group pull-right">
-                                <a class="btn btn-xs" asp-area="" asp-controller="Usuario" asp-action="Editar" asp-route-id="@usuario.Id" style="background-color: blue;">
+                                <a class="btn btn-xs" asp-area="" asp-controller="Usuario" asp-action="Editar" asp-route-id="@usuario.Id" style="background-color: blue;" onclick="showLoader()">
                                     <i class="bi-pencil" style="font-size: 15px; color: white;"></i>
                                 </a>
                                 &nbsp;&nbsp;
-                                <form method="post">
-                                    <button type="submit" class="btn btn-xs" asp-area="" asp-controller="Usuario" asp-action="Excluir" asp-route-id="@usuario.Id" style="font-size: 15px; background-color: red; color: white;" onclick="return confirm('Deseja excluir este usuário?');">
+                                <form method="post" onsubmit="return confirmDeletion()">
+                                    <button type="submit" class="btn btn-xs" asp-area="" asp-controller="Usuario" asp-action="Excluir" asp-route-id="@usuario.Id" style="font-size: 15px; background-color: red; color: white;">
                                         <i class="bi-trash"></i>
                                     </button>
                                 </form>
@@ -70,3 +70,14 @@ else
         <p>Nenhum usuário encontrado.</p>
     </div>
 }
+
+
+<script>
+    function confirmDeletion() {
+        if (confirm('Deseja excluir este usuário?')) {
+            showLoader();
+            return true;
+        }
+        return false;
+    }
+</script>

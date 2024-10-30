@@ -82,12 +82,12 @@
 
             <!-- Botão Submit -->
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <input type="submit" value="Salvar" class="btn btn-primary" onclick="showLoader();" />
                 <input class="btn btn-primary"
                        type="button"
                        value="Voltar"
                        style="background-color: red; border-color: red;"
-                       onclick="window.location.href='@Url.Action("Index", "ExModeloEmailParamModels")'" />
+                       onclick="window.location.href='showLoader();@Url.Action("Index", "ExModeloEmailParamModels")'" />
             </div>
         </form>
     </div>

@@ -49,13 +49,13 @@
         </dd>
     </dl>
     
-    <form asp-action="Delete">
+    <form asp-action="Delete" onsubmit="showLoader();">
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Deletar" class="btn btn-danger" /> 
         <input class="btn btn-primary"
                type="button"
                value="Voltar"
                style="background-color: red; border-color: red;"
-               onclick="window.location.href='@Url.Action("Index", "ExModeloEmailParamModels")'" />
+               onclick="showLoader();window.location.href='@Url.Action("Index", "ExModeloEmailParamModels")'" />
     </form>
 </div>

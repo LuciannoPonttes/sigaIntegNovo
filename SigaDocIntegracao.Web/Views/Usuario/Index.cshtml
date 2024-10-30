@@ -15,7 +15,7 @@
                 <label for="searchInput" class="fw-bold">Pesquisar:</label>
                 <input type="text" id="searchInput" placeholder="Buscar por nome ou e-mail" onkeyup="filterUsers()" class="form-control form-control-sm" style="margin-bottom: 10px; width: 300px;">
             </div>
-            <a class="btn btn-success" asp-area="" asp-controller="Usuario" asp-action="Adicionar" style="font-size: 15px;">
+            <a class="btn btn-success" asp-area="" asp-controller="Usuario" asp-action="Adicionar" style="font-size: 15px;" onclick="showLoader()">
                 Criar Usuário
             </a>
         </div>
@@ -58,6 +58,8 @@
             url += `&status=${status}`
         }
 
+        showLoader();
+
         fetch(url, {
             method: 'GET',
             headers: {
@@ -67,14 +69,20 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById("contentContainer").innerHTML = data;
+                hideLoading();
             })
-            .catch(error => console.error('Erro:', error));
+            .catch(error => {
+                console.error('Erro:', error);
+                hideLoading();
+            });
 
     }
 
     function clearSearch() {
         currentPage = 0;
         status = null;
+
+        showLoader();
 
         fetch(`/Usuario/IndexFilter?pageIndex=${currentPage}`, {
             method: 'GET',
@@ -87,8 +95,12 @@
                 document.getElementById("contentContainer").innerHTML = data;
                 document.getElementById("searchInput").value = '';
                 document.getElementById("statusSelect").value = '';               
+                hideLoading();
             })
-            .catch(error => console.error('Erro:', error));
+            .catch(error => {
+                console.error('Erro:', error);
+                hideLoading();
+            });
     }
 
     function changePage(pageIndex) {
@@ -113,6 +125,8 @@
             url += `&status=${status}`
         }
 
+        showLoader();
+
         fetch(url, {
             method: 'GET',
             headers: {
@@ -122,8 +136,12 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById("contentContainer").innerHTML = data;
+                hideLoading();
             })
-            .catch(error => console.error('Erro:', error));
+            .catch(error => {
+                console.error('Erro:', error);
+                hideLoading();
+            });
     }
 
     let currentPage = 0;
